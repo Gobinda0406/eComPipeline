@@ -23,6 +23,7 @@ public class MainTest {
 		 Response response = httpRequest.request(Method.GET, "/Hyderabad");
 		 int statusCode = response.getStatusCode();
 		 Assert.assertEquals(statusCode, 200);
+		 //Small changes done
 
 
 
