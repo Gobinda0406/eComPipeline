@@ -33,6 +33,18 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/pipeline-backend-main/target'
         ArtifactName: 'RestBuild'
         publishLocation: 'Container'
+- stage: Deploy
+  displayName: "Deploy in Tomcat"
+  jobs:
+  - job: 'Deploy'
+    pool: ecom-pool
+    steps:  
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          which java 
+ 
 - stage: QA
   condition: succeeded('Dev')
   dependsOn: Dev
