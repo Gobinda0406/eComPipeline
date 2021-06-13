@@ -4,11 +4,11 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
 trigger:
-- main
+- none
 
 stages:
 - stage: Dev
-  displayName: 'Build'
+  displayName: 'Build_Rest_Services'
   jobs:
   - job: 'Generate_War'
     pool:
@@ -30,10 +30,9 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/pipeline-backend-main/target'
         ArtifactName: 'RestBuild'
         publishLocation: 'Container'
-    - task: Bash@3 
 - stage: QA
   condition: succeeded('Dev')
   dependsOn: Dev
