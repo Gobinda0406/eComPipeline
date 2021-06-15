@@ -5,11 +5,8 @@
 
 trigger:
 - none
-
 stages:
 - stage: QA
-  condition: succeeded('Dev')
-  dependsOn: Dev
   displayName: 'Test Rest Webservices'
   jobs:
   - job: 'Test_Rest_Services'
