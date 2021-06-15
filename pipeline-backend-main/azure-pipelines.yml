@@ -7,44 +7,6 @@ trigger:
 - none
 
 stages:
-- stage: Dev
-  displayName: 'Build_Rest_Services'
-  jobs:
-  - job: 'Generate_War'
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Maven@3
-      inputs:
-        mavenPomFile: 'pipeline-backend-main/pom.xml'
-        mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '1.8'
-        jdkArchitectureOption: 'x64'
-        publishJUnitResults: false
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        goals: 'clean package'
-    - task: CopyFiles@2
-      inputs:
-        Contents: '**/pipeline-backend-main/target/*.war'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/pipeline-backend-main/target'
-        ArtifactName: 'RestBuild'
-        publishLocation: 'Container'
-- stage: Deploy
-  displayName: "Deploy in Tomcat"
-  jobs:
-  - job: 'Deploy'
-    pool: ecom-pool
-    steps:  
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          which java 
- 
 - stage: QA
   condition: succeeded('Dev')
   dependsOn: Dev
@@ -59,6 +21,8 @@ stages:
         targetType: 'inline'
         script: |
           echo Build is completed  
+          azcopy -h
+          az -h
 
 
 
