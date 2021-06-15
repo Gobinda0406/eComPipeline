@@ -33,8 +33,7 @@ stages:
         targetType: 'inline'
         script: |
           echo Copying is completed
-          azcopy cp '$(Build.ArtifactStagingDirectory)' 'https://reportdump.blob.core.windows.net/images?sp=r&st=2021-06-15T04:52:41Z&se=2021-06-15T12:52:41Z&spr=https&sv=2020-02-10&sr=c&sig=KdLMoVEZFvYo7nah7wgSZMPsFiGTQBCp08K3Fp57j8Q%3D' --recursive
-         
+          azcopy copy '$(Build.ArtifactStagingDirectory)' 'https://reportdump.blob.core.windows.net/images?sv=2020-02-10&ss=bfqt&srt=sco&sp=rwdlacuptfx&se=2021-06-15T13:05:47Z&st=2021-06-15T05:05:47Z&spr=https&sig=PK8njPmgGs0fAT6SGdBbVyKwF%2Bk%2FhMEP%2FxHa6t3vbxk%3D' --recursive
          
 
 
