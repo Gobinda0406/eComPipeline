@@ -23,7 +23,7 @@ stages:
           cd data
           touch file345.txt
           cd ..
-          azcopy copy /home/vsts/work/1/s/data https://reportdump.blob.core.windows.net/images?sp=r&st=2021-06-15T04:43:01Z&se=2021-06-15T12:43:01Z&spr=https&sv=2020-02-10&sr=c&sig=MSrVC9u6yfG437eizs3yvfwTiUsY3a%2B7DFUsYlxJac8%3D --recursive
+          azcopy cp "/home/vsts/work/1/s/data" "https://reportdump.blob.core.windows.net/images?sp=r&st=2021-06-15T04:43:01Z&se=2021-06-15T12:43:01Z&spr=https&sv=2020-02-10&sr=c&sig=MSrVC9u6yfG437eizs3yvfwTiUsY3a%2B7DFUsYlxJac8%3D" --recursive
 
 
 
