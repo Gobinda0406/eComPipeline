@@ -21,10 +21,12 @@ stages:
           pwd
           mkdir data
           cd data
+          pwd
           touch file345.txt
+          ls -l
     - task: CopyFiles@2
       inputs:
-        Contents: '/home/vsts/work/1/s/data'
+        Contents: '/home/vsts/work/1/s/data/file345.txt'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: Bash@3
       inputs:
