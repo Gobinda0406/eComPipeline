@@ -17,9 +17,9 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          echo Build is completed  
-          azcopy -h
-          az -h
+          echo Build is completed
+          pwd  
+
 
 
 
