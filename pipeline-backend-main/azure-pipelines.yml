@@ -47,13 +47,21 @@ stages:
         artifactName: 'RestBuild'
         itemPattern: '**/*war'
         downloadPath: '$(Build.ArtifactStagingDirectory)'
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.ArtifactStagingDirectory)'
+        Contents: '**/*war'
+        TargetFolder: '/opt/tomcat/webapps'
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
           which java
           pwd
-          sudo cp $(Build.ArtifactStagingDirectory)/EmployeeService-0.0.1-SNAPSHOT.war /opt/tomcat/webapps 
+          cd $(Build.ArtifactStagingDirectory)
+          ls
+          cd /opt/tomcat/webapps
+          ls
 - stage: QA
   condition: succeeded('Deploy')
   dependsOn: Dev
