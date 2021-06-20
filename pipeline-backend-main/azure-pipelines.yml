@@ -45,20 +45,15 @@ stages:
         buildType: 'current'
         downloadType: 'single'
         artifactName: 'RestBuild'
-        itemPattern: '**/*war'
-        downloadPath: '$(Build.ArtifactStagingDirectory)'
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: '$(Build.ArtifactStagingDirectory)'
-        Contents: '**/*war'
-        TargetFolder: '/opt/tomcat/webapps'
+        itemPattern: '**/*.war'
+        downloadPath: '$(Pipeline.Workspace)'
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
           which java
           pwd
-          cd $(Build.ArtifactStagingDirectory)
+          sudo cp $(Pipeline.Workspace)/EmployeeService-0.0.1-SNAPSHOT.war /opt/tomcat/webapps
           ls
           cd /opt/tomcat/webapps
           ls
