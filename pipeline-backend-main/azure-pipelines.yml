@@ -49,9 +49,18 @@ stages:
         artifactName: 'RestBuild'
         itemPattern: '**/*.war'
         downloadPath: '$(Build.ArtifactStagingDirectory)/test'
-    - script: pwd
-    - script: cd $(Build.ArtifactStagingDirectory)/test/RestBuild
-    - script: sudo cp -R * /opt/tomcat/webapps
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          pwd
+          cd $(Build.ArtifactStagingDirectory)/test/RestBuild
+          pwd
+          sudo cp -R * /opt/tomcat/webapps
+          cd /opt/tomcat/webapps
+          pwd
+          ls
+
          
  
 
