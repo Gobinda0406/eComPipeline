@@ -6,20 +6,68 @@
 trigger:
 - none
 stages:
+- stage: Dev
+  displayName: 'Build_Rest_Services'
+  jobs:
+  - job: 'Generate_War'
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pipeline-backend-main/pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: false
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        goals: 'clean package'
+    - task: CopyFiles@2
+      inputs:
+        Contents: '**/pipeline-backend-main/target/*.war'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/pipeline-backend-main/target'
+        ArtifactName: 'RestBuild'
+        publishLocation: 'Container'
 - stage: Deploy
   displayName: "Deploy in Tomcat"
   jobs:
   - job: 'Deploy'
-    timeoutInMinutes: 20
     pool: ecom-pool
     steps:
+    - checkout: none 
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Pipeline.Workspace)'
+        Contents: '**/RestBuild/**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
           which java
           pwd
-          hostname
+          sudo cp $(Build.ArtifactStagingDirectory)/EmployeeService-0.0.1-SNAPSHOT.war /opt/tomcat/webapps 
+- stage: QA
+  condition: succeeded('Deploy')
+  dependsOn: Dev
+  displayName: 'Test Rest Webservices'
+  jobs:
+  - job: 'Test_Rest_Services'
+    pool:
+      vmImage: ubuntu-latest
+    steps:  
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo Build is completed  
+
+
+
 
 
 
