@@ -39,11 +39,17 @@ stages:
   - job: 'Deploy'
     pool: ecom-pool
     steps:  
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Pipeline.Workspace)'
+        Contents: '**/RestBuild/**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
-          which java 
+          which java
+          sudo cp $(Build.ArtifactStagingDirectory)/EmployeeService-0.0.1-SNAPSHOT.war /opt/tomcat/webapps
  
 - stage: QA
   condition: succeeded('Dev')
