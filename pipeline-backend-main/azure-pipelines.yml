@@ -56,7 +56,7 @@ stages:
           pwd
           cd $(Build.ArtifactStagingDirectory)/test/RestBuild
           pwd
-          sudo cp -R * /opt/tomcat/webapps
+          sudo dep.war /opt/tomcat/webapps
           cd /opt/tomcat/webapps
           pwd
           ls
