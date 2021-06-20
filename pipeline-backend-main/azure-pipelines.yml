@@ -50,13 +50,8 @@ stages:
         itemPattern: '**/*.war'
         downloadPath: '$(Build.ArtifactStagingDirectory)/test'
     - script: pwd
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          which java
-          pwd
-          sudo cp $(Build.ArtifactStagingDirectory)/test/dep.war /opt/tomcat/webapps
+    - script: cd $(Build.ArtifactStagingDirectory)/test
+    - script: sudo cp -R * /opt/tomcat/webapps
          
  
 
