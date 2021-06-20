@@ -50,7 +50,7 @@ stages:
         itemPattern: '**/*.war'
         downloadPath: '$(Build.ArtifactStagingDirectory)/test'
     - script: pwd
-    - script: cd $(Build.ArtifactStagingDirectory)/test
+    - script: cd $(Build.ArtifactStagingDirectory)/test/RestBuild
     - script: sudo cp -R * /opt/tomcat/webapps
          
  
