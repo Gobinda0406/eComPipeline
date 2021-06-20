@@ -48,7 +48,7 @@ stages:
         downloadType: 'single'
         artifactName: 'RestBuild'
         itemPattern: '**/*.war'
-        downloadPath: '$(Pipeline.Workspace)'
+        downloadPath: '$(Build.ArtifactStagingDirectory)/test'
     - script: pwd
     - task: Bash@3
       inputs:
@@ -56,10 +56,8 @@ stages:
         script: |
           which java
           pwd
-          sudo cp $(System.DefaultWorkingDirectory)/**/*.war /opt/tomcat/webapps
-          ls
-          cd /opt/tomcat/webapps
-          ls
+          sudo cp $(Build.ArtifactStagingDirectory)/test/dep.war /opt/tomcat/webapps
+         
  
 
 
