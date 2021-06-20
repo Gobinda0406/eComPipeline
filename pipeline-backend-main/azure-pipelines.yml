@@ -11,6 +11,7 @@ stages:
   displayName: "Deploy in Tomcat"
   jobs:
   - job: 'Deploy'
+    timeoutInMinutes: 20
     pool: ecom-pool
     steps:
     - task: Bash@3
