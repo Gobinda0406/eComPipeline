@@ -56,7 +56,7 @@ stages:
         script: |
           which java
           pwd
-          sudo cp $(Pipeline.Workspace)/dep.war /opt/tomcat/webapps
+          sudo cp $(System.DefaultWorkingDirectory)/**/*.war /opt/tomcat/webapps
           ls
           cd /opt/tomcat/webapps
           ls
