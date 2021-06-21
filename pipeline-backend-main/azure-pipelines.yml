@@ -25,7 +25,6 @@ stages:
     timeoutInMinutes: 2
     pool: ecom-pool
     steps:
-    - checkout: TestEmailNotification_0621 
     - script: pwd
 - stage: QA
   condition: succeeded('Deploy')
