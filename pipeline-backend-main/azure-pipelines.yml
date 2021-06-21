@@ -23,15 +23,15 @@ stages:
   jobs:
   - job: 'Deploy'
     timeoutInMinutes: 10
-    pool:
-      vmImage: ubuntu-latest
+    pool: ecom-pool
     steps:
     - checkout: none 
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
-          echo Build is completed 
+          echo Build is completed
+          pwd
 - stage: QA
   condition: succeeded('Deploy')
   dependsOn: Deploy
