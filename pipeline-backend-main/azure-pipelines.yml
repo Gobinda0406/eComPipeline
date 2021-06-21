@@ -23,7 +23,8 @@ stages:
   jobs:
   - job: 'Deploy'
     timeoutInMinutes: 10
-    pool: ecom-pool
+    pool:
+      vmImage: ubuntu-latest
     steps:
     - checkout: none 
     - task: Bash@3
