@@ -13,25 +13,11 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-    - task: Maven@3
+    - task: Bash@3
       inputs:
-        mavenPomFile: 'pipeline-backend-main/pom.xml'
-        mavenOptions: '-Xmx3072m'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '1.8'
-        jdkArchitectureOption: 'x64'
-        publishJUnitResults: false
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        goals: 'clean package'
-    - task: CopyFiles@2
-      inputs:
-        Contents: '**/pipeline-backend-main/target/*.war'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/pipeline-backend-main/target'
-        ArtifactName: 'RestBuild'
-        publishLocation: 'Container'
+        targetType: 'inline'
+        script: |
+          echo Build is completed 
 - stage: Deploy
   displayName: "Deploy in Tomcat"
   jobs:
@@ -40,24 +26,11 @@ stages:
     pool: ecom-pool
     steps:
     - checkout: none 
-    - task: DownloadBuildArtifacts@0
-      inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: 'RestBuild'
-        itemPattern: '**/*.war'
-        downloadPath: '$(Build.ArtifactStagingDirectory)/test'
     - task: Bash@3
       inputs:
         targetType: 'inline'
         script: |
-          pwd
-          cd $(Build.ArtifactStagingDirectory)/test/RestBuild
-          pwd
-          sudo cp *.war /opt/tomcat/webapps
-          cd /opt/tomcat/webapps
-          pwd
-          ls
+          echo Build is completed 
 - stage: QA
   condition: succeeded('Deploy')
   dependsOn: Deploy
