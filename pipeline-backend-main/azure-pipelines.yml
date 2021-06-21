@@ -45,7 +45,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          echo Build is completed         
+          echo test is completed         
 
          
  
